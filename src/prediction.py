@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import joblib
-from preprocessing import preprocess_single_image, load_dataset
+from .preprocessing import preprocess_single_image, load_dataset  # Fixed import
 import logging
 
 # Set up logging
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     # Example usage
     model_path = "models/optimized_xgb_model.pkl"
     test_dir = "data/test"
-    sample_image = "data/test/benign/ISIC_1431322.jpg"
+    sample_image = "data/test/benign/ISIC_1431322.jpg"  # Update with actual path
     
     # Load model
     model = load_model(model_path)
