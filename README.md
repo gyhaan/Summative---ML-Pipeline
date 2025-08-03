@@ -25,7 +25,7 @@ These results show that the model performs reliably in distinguishing between be
 
 ## Video Demo
 A demonstration of the Skin Cancer Classifier is available on YouTube:  
-[Watch the Video Demo](https://www.youtube.com/watch?v=placeholder)  
+[Watch the Video Demo](https://www.loom.com/share/0b092164d7704f63bbcaacc60e189d71?sid=b23a14dc-cc08-4e0c-bdf5-da3a474a2eae)  
 *Note*: This is a placeholder link. Update with the actual YouTube link once the demo is uploaded.
 
 ## Deployed URL
