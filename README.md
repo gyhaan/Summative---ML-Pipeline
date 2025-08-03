@@ -24,9 +24,8 @@ The skin cancer classification model was evaluated using a held-out test set, an
 These results show that the model performs reliably in distinguishing between benign and malignant skin lesions. High precision and recall are especially important in medical diagnosis tasks, and an accuracy close to 90% demonstrates the model’s practical viability.
 
 ## Video Demo
-A demonstration of the Skin Cancer Classifier is available on YouTube:  
+A demonstration of the Skin Cancer Classifier is available on Loom:  
 [Watch the Video Demo](https://www.loom.com/share/0b092164d7704f63bbcaacc60e189d71?sid=b23a14dc-cc08-4e0c-bdf5-da3a474a2eae)  
-*Note*: This is a placeholder link. Update with the actual YouTube link once the demo is uploaded.
 
 ## Deployed URL
 The app is deployed at:  
