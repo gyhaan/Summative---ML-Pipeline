@@ -8,6 +8,21 @@ The **Skin Cancer Classifier** is a machine learning application designed to cla
 
 The app is ideal for researchers, students, or medical professionals exploring AI-driven skin cancer detection. It uses TensorFlow for model training and prediction, and pandas/matplotlib for data visualization. The project is structured for local development and can be deployed on platforms like Render for web access.
 
+### 📊 Model Performance
+
+The skin cancer classification model was evaluated using a held-out test set, and it achieved the following metrics:
+
+| Metric        | Value   | Description |
+|---------------|---------|-------------|
+| **Test Loss** | `0.2276` | Measures how well the model's predictions align with actual labels. Lower values indicate better performance. |
+| **Accuracy**  | `89.29%` | The percentage of correct predictions made by the model. |
+| **Precision** | `89.29%` | Indicates how many of the positively predicted cases were actually positive (low false positives). |
+| **Recall**    | `89.29%` | Indicates how many actual positive cases were correctly identified (low false negatives). |
+
+#### ✅ Interpretation
+
+These results show that the model performs reliably in distinguishing between benign and malignant skin lesions. High precision and recall are especially important in medical diagnosis tasks, and an accuracy close to 90% demonstrates the model’s practical viability.
+
 ## Video Demo
 A demonstration of the Skin Cancer Classifier is available on YouTube:  
 [Watch the Video Demo](https://www.youtube.com/watch?v=placeholder)  
@@ -118,6 +133,19 @@ Follow these steps to set up and run the Skin Cancer Classifier locally on a Win
      - If no model exists at `models/skin_cancer_class.keras`, a new one will be created.
    - **Data Insights Tab**:
      - View class distribution, image dimensions, and pixel intensity plots for `data/train` and `data/test`.
+   - **Performance Insights**
+     -![Load Test Results](load_test_results.png)
+        ### 🧪 Load Testing Conclusion
+
+        The Locust-based load test simulated up to **50 concurrent users** sending image prediction requests to the FastAPI model endpoint. The application successfully handled incoming traffic with **no major request failures**, maintaining a stable request throughput of around **0.5 requests per second**.
+
+        However, the response time analysis revealed performance limitations:
+
+        - ⏱️ **Median response times** increased steadily as user load grew.
+        - 📈 **95th percentile spikes** indicate occasional bottlenecks, with some requests taking significantly longer than average.
+        
+        > **Conclusion**: The API is robust under light to moderate traffic, but would benefit from optimizations—such as asynchronous processing, model inference tuning, or horizontal scaling—to improve responsiveness and scalability under high load.
+
 
 7. **Troubleshooting**
    - **ImportError**: Ensure `src/__init__.py` exists and you’re running `streamlit run src/app.py` from `C:\Users\TestSolutions\Desktop\Summative - ML Pipeline`.
@@ -137,4 +165,4 @@ Follow these steps to set up and run the Skin Cancer Classifier locally on a Win
 - **Model**: The app uses a pre-trained MobileNetV2 model, saved as `models/skin_cancer_class.keras`. Retraining creates or updates this file.
 - **Deployment**: The app is live at [https://summative-ml-pipeline.onrender.com/](https://summative-ml-pipeline.onrender.com/). For local changes, update paths to `/data` and `/models` in `app.py`, `model.py`, `prediction.py`, and `utils.py`, and adjust `render.yaml` to use `streamlit run src/app.py`.
 
-For issues or contributions, contact [your-email@example.com] or open an issue on GitHub.
+For issues or contributions, contact [g.yhaan@alustudent.com] or open an issue on GitHub.

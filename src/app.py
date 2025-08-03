@@ -93,16 +93,18 @@ with tab3:
         if 'class_distribution' in insights['chart_data']:
             st.subheader("Class Distribution")
             st.bar_chart(insights['chart_data']['class_distribution'], x='Class', y='Number of Images')
+            st.markdown("**Description**: This bar chart shows the number of images in each class (benign and malignant) across the training and test datasets. A balanced distribution (similar counts for both classes) is ideal for training a fair model. Imbalances may indicate a need for more images in one class.")
         
         if 'image_dimensions' in insights['chart_data']:
             df_dims = insights['chart_data']['image_dimensions']
             if not df_dims.empty and all(col in df_dims.columns for col in ['width', 'height', 'class']):
                 st.subheader("Image Dimensions")
                 st.scatter_chart(df_dims, x='width', y='height', color='class')
+                st.markdown("**Description**: This scatter plot displays the width and height of images in the dataset, with colors indicating benign or malignant classes. Consistent dimensions suggest images are preprocessed uniformly, which is crucial for model training. Outliers may need resizing.")
             else:
                 st.info("Not enough data available to display image dimensions.")
-
         
         if 'pixel_intensity' in insights['chart_data'] and not insights['chart_data']['pixel_intensity'].empty:
             st.subheader("Pixel Intensity Distribution")
             st.line_chart(insights['chart_data']['pixel_intensity'], x='Pixel Intensity')
+            st.markdown("**Description**: This line chart shows the distribution of pixel brightness (0–255) for benign and malignant images. Distinct patterns (e.g., different peaks) between classes can help the model differentiate them. Similar distributions may indicate low contrast or similar image characteristics.")
