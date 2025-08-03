@@ -1,43 +1,40 @@
 import tensorflow as tf
 import numpy as np
+from PIL import Image
+import io
 from pathlib import Path
-from src.preprocessing import preprocess_image
+import logging
 
-CLASS_NAMES = ['benign', 'malignant']  # Match dataset folder names
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-def load_model(model_path=None):
-    """Loads the trained model."""
-    if model_path is None:
-        project_root = Path(__file__).parent.parent
-        model_path = project_root / 'models' / 'skin_cancer_class.keras'
+def predict_single(file):
+    MODEL_PATH = Path.cwd() / "models/skin_cancer_class.keras"
+    CLASS_NAMES = ['benign', 'malignant']
+    IMAGE_SIZE = (224, 224)
+
     try:
-        model = tf.keras.models.load_model(model_path)
-        return model
+        model = tf.keras.models.load_model(MODEL_PATH)
     except Exception as e:
-        print(f"Error loading model: {e}")
-        return None
+        logger.error(f"Failed to load model: {e}")
+        raise
 
-def predict_single(image_bytes, model=None):
-    """Makes a prediction on a single image."""
-    if model is None:
-        model = load_model()
-    if model is None:
-        return None, None
-    processed_image = preprocess_image(image_bytes)
-    prediction = model.predict(processed_image)
-    
-    predicted_class_index = np.argmax(prediction)
-    predicted_class_name = CLASS_NAMES[predicted_class_index]
-    confidence_score = float(np.max(prediction))
-    
-    return predicted_class_name, confidence_score
-
-def predict_single_from_path(image_path, model=None):
-    """Makes a prediction on a single image from a file path."""
     try:
-        with open(image_path, 'rb') as f:
-            image_bytes = f.read()
-        return predict_single(image_bytes, model)
+        image = Image.open(file).convert('RGB')
+        image = image.resize(IMAGE_SIZE)
+        image_array = np.array(image)
+        image_array = np.expand_dims(image_array, axis=0)
+        image_array = tf.keras.applications.mobilenet_v2.preprocess_input(image_array)
+
+        predictions = model.predict(image_array)
+        predicted_class_idx = np.argmax(predictions[0])
+        confidence = predictions[0][predicted_class_idx]
+
+        if predicted_class_idx >= len(CLASS_NAMES):
+            logger.error(f"Predicted class index {predicted_class_idx} out of range for classes {CLASS_NAMES}")
+            raise ValueError(f"Predicted class index {predicted_class_idx} out of range")
+
+        return CLASS_NAMES[predicted_class_idx], float(confidence)
     except Exception as e:
-        print(f"Error reading image {image_path}: {e}")
-        return None, None
+        logger.error(f"Error during prediction: {e}")
+        raise
